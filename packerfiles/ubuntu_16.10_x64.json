@@ -2,28 +2,34 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "iso_url": "http://artifact-repo/iso/ubuntu-16.10-server-amd64.iso",
-    "preseed_url": "http://artifact-repo/unattended/ubuntu_16.10_de-ch_dhcp.cfg"
+    "ssh_user": "packer",
+    "ssh_pwd": "packer",
+    "iso_name": "ubuntu-16.10-server-amd64.iso",
+    "iso_mirror": "http://artifact-repo/iso/",
+    "preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
+    "preseed_mirror": "http://artifact-repo/unattended/"
   },
+  
   "builders": [
 		{
 		  "type": "virtualbox-iso",
-		  "iso_url": "{{user `iso_url`}}",
+		  "iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}",
 		  "guest_os_type": "Ubuntu_64",
 		  "iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
 		  "iso_checksum_type": "none",
-		  "ssh_username": "packer",
-		  "ssh_password": "packer", 
+		  "ssh_username": "{{user `ssh_user`}}",
+		  "ssh_password": "{{user `ssh_pwd`}}", 
+		  "ssh_timeout": "10000s",
 		  "boot_wait": "5s",
 			"boot_command": [
 				"<esc><wait>",
 				"<esc><wait>",
 				"<enter><wait>",
 				"/install/vmlinuz initrd=/install/initrd.gz net.ifnames=0 ",
-      	"auto-install/enable=true ",
-     		"debconf/priority=critical ",
-      	"preseed/url={{user `preseed_url`}} ",
-     		"<enter>"
+				"auto-install/enable=true ",
+				"debconf/priority=critical ",
+				"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
+				"<enter>"
 			], 
 			"vboxmanage": [
     		["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
