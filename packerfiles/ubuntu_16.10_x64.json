@@ -2,8 +2,8 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "ssh_user": "packer",
-    "ssh_pwd": "packer",
+    "user": "packer",
+    "pwd": "packer",
     "iso_name": "ubuntu-16.10-server-amd64.iso",
     "iso_mirror": "http://artifact-repo/iso/",
     "preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
@@ -17,8 +17,8 @@
 		  "guest_os_type": "Ubuntu_64",
 		  "iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
 		  "iso_checksum_type": "none",
-		  "ssh_username": "{{user `ssh_user`}}",
-		  "ssh_password": "{{user `ssh_pwd`}}", 
+		  "ssh_username": "{{user `user`}}",
+		  "ssh_password": "{{user `pwd`}}", 
 		  "ssh_timeout": "10000s",
 		  "boot_wait": "5s",
 			"boot_command": [
@@ -31,6 +31,7 @@
 				"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
 				"<enter>"
 			], 
+			"shutdown_command": "sudo systemctl poweroff",
 			"vboxmanage": [
     		["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
   		]
