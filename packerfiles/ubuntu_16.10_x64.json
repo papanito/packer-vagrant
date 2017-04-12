@@ -1,4 +1,10 @@
 {
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "iso_url": "http://articat-repo/iso/ubuntu-16.10-server-amd64.iso",
+    "preseed_url": "http://articat-repo/unattended/ubuntu_16.10_de-ch_dhcp.cfg"
+  },
   "builders": [
 		{
 		  "type": "virtualbox-iso",
@@ -20,12 +26,5 @@
      		"<enter>"
 			]
 		}
-  ], 
-  
-  "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": "",
-    "iso_url": "D:/ISO/ubuntu-16.10-server-amd64.iso",
-    "preseed_url": "http://10.112.237.181/unattended/ubuntu_16.10_de-ch_dhcp.cfg"
-  }
+  ]
 }
