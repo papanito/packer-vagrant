@@ -4,62 +4,75 @@
     "aws_secret_key": "",
     "user": "packer",
     "pwd": "packer",
-    "iso_name": "ubuntu-16.10-server-amd64.iso",
+    "ssh_timeout": "2000s",
+    "iso_name": "ubuntu-16.10-server-amd64",
     "iso_mirror": "http://artifact-repo/iso/",
     "preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
     "preseed_mirror": "http://artifact-repo/unattended/",
-		"ssh_timeout": "5000s"
   },
   "builders": [
-		{
-		  "type": "virtualbox-iso",
-		  "iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}",
-		  "guest_os_type": "Ubuntu_64",
-		  "iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
-		  "iso_checksum_type": "none",
-		  "ssh_username": "{{user `user`}}",
-		  "ssh_password": "{{user `pwd`}}", 
-		  "ssh_timeout": "{{user `ssh_timeout`}}",
-		  "boot_wait": "5s",
-			"boot_command": [
-				"<esc><wait>",
-				"<esc><wait>",
-				"<enter><wait>",
-				"/install/vmlinuz initrd=/install/initrd.gz net.ifnames=0 ",
-				"auto-install/enable=true ",
-				"debconf/priority=critical ",
-				"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
-				"<enter>"
-			], 
-			"shutdown_command": "sudo systemctl poweroff",
-			"vboxmanage": [
-    		["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
+	{
+		"type": "virtualbox-iso",
+		"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}.iso",
+		"guest_os_type": "Ubuntu_64",
+		"iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
+		"iso_checksum_type": "none",
+		"ssh_username": "{{user `user`}}",
+		"ssh_password": "{{user `pwd`}}", 
+		"ssh_timeout": "{{user `ssh_timeout`}}",
+	 	"boot_wait": "5s",
+		"boot_command": [
+			"<esc><wait>",
+			"<esc><wait>",
+			"<enter><wait>",
+			"/install/vmlinuz initrd=/install/initrd.gz ",
+			"auto-install/enable=true ",
+			"debconf/priority=critical ",
+			"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
+			"<enter>"
+		], 
+		"shutdown_command": "sudo systemctl poweroff",
+		"vboxmanage": [
+    			["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
   		]
-		}, {
-		  "type": "qemu",
-		  "iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}",
-		  "iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
-		  "iso_checksum_type": "none",
-		  "ssh_username": "{{user `user`}}",
-		  "ssh_password": "{{user `pwd`}}", 
-		  "ssh_timeout": "{{user `ssh_timeout`}}",
-		  "boot_wait": "5s",
-			"boot_command": [
-				"<esc><wait>",
-				"<esc><wait>",
-				"<enter><wait>",
-				"/install/vmlinuz initrd=/install/initrd.gz net.ifnames=0 ",
-				"auto-install/enable=true ",
-				"debconf/priority=critical ",
-				"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
-				"<enter>"
+	}, {
+		"type": "qemu",
+		"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}",
+		"iso_checksum": "B5D4911BD53EC5029781ADE0937DAD43C4ED90F6",
+		"iso_checksum_type": "none",
+		"ssh_username": "{{user `user`}}",
+		"ssh_password": "{{user `pwd`}}", 
+		"ssh_timeout": "{{user `ssh_timeout`}}",
+		"boot_wait": "5s",
+		"boot_command": [
+			"<esc><wait>",
+			"<esc><wait>",
+			"<enter><wait>",
+			"/install/vmlinuz initrd=/install/initrd.gz net.ifnames=0 ",
+			"auto-install/enable=true ",
+			"debconf/priority=critical ",
+			"preseed/url={{user `preseed_mirror`}}{{user `preseed_name`}} ",
+			"<enter>"
 			], 
-      "format": "qcow2",
-      "headless": false,
-      "accelerator": "kvm",
-			"net_device": "virtio-net",
-      "disk_interface": "virtio",
-			"shutdown_command": "sudo systemctl poweroff"
-		}
-  ]	
+      		"format": "qcow2",
+      		"headless": false,
+      		"accelerator": "kvm",
+		"net_device": "virtio-net",
+      		"disk_interface": "virtio",
+		"shutdown_command": "sudo systemctl poweroff"
+	}
+  ],
+  "provisioners": [
+  	{
+  		"type": "shell",
+			"inline": ["echo 'my additional provisioning steps'"]
+  	}
+  ],
+  "post-processors": [
+    {
+		"type": "compress",
+		"format": "tar.gz",
+		"output": "{{user `iso_name`}}-{{.Provider}}.box"
+    }
+  ]
 }
