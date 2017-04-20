@@ -7,7 +7,7 @@
     "ssh_timeout": "2000s",
     "iso_name": "ubuntu-16.10-server-i386.iso",
     "iso_mirror": "http://releases.ubuntu.com/16.10/",
-	"iso_checksum": "7d6de832aee348bacc894f0a2ab1170d",
+	"iso_checksum": "e532cfbc738876b353c7c9943d872606",
 	"preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
 	"preseed_mirror": "http://artifact-repo/unattended/",
 	"shutdown_command": "sudo -S shutdown -P now"
