@@ -10,3 +10,6 @@
 
 # Windows Imaging stuff
 wim
+
+# packer variable files
+/packerfiles/*.cfg
