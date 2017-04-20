@@ -1,0 +1,12 @@
+# tools stuff
+.gradle
+**/packer-cache
+**/.vagrant
+**/output*
+
+# image files
+**/*.box
+**/*.iso
+
+# Windows Imaging stuff
+wim
