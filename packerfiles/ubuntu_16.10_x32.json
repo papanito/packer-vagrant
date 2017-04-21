@@ -3,7 +3,7 @@
     "aws_access_key": "",
     "aws_secret_key": "",
     "user": "packer",
-    "pwd": "packer",
+    "pwd": null,
     "ssh_timeout": "2000s",
     "iso_name": "ubuntu-16.10-server-i386",
     "iso_mirror": "http://releases.ubuntu.com/16.10/",
