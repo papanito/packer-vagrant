@@ -7,16 +7,18 @@
     "ssh_timeout": "2000s",
     "iso_name": "ubuntu-16.10-server-i386",
     "iso_mirror": "http://releases.ubuntu.com/16.10/",
-	"iso_checksum": "e532cfbc738876b353c7c9943d872606",
-	"preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
-	"preseed_mirror": "http://artifact-repo/unattended/",
-	"shutdown_command": "sudo -S shutdown -P now"
+		"iso_checksum": "e532cfbc738876b353c7c9943d872606",
+		"preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
+		"preseed_mirror": "http://artifact-repo/unattended/",
+		"shutdown_command": "sudo -S shutdown -P now",
+		"headless": "true"
   },
   "builders": [
 		{
 			"type": "virtualbox-iso",
 			"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}.iso",
-			"guest_os_type": "Ubuntu_32",
+			"guest_os_type": "Ubuntu",
+			"headless": "{{user `headless`}}",
 			"iso_checksum": "{{user `iso_checksum`}}",
 			"iso_checksum_type": "md5",
 			"ssh_username": "{{user `user`}}",
@@ -47,7 +49,7 @@
   "provisioners": [
   	{
   		"type": "shell",
-		"inline": [
+			"inline": [
 			"echo 'my additional provisioning steps'"
 		]
   	}

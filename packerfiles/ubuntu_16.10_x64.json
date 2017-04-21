@@ -6,17 +6,19 @@
     "pwd": "packer",
     "ssh_timeout": "2000s",
     "iso_name": "ubuntu-16.10-server-amd64",
-    "iso_mirror": "http://artifact-repo/iso/",
+    "iso_mirror": "http://releases.ubuntu.com/16.10/",
 	"iso_checksum": "7d6de832aee348bacc894f0a2ab1170d",
 	"preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
 	"preseed_mirror": "http://artifact-repo/unattended/",
-	"shutdown_command": "sudo -S shutdown -P now"
+	"shutdown_command": "sudo -S shutdown -P now",
+	"headless": "true"
   },
   "builders": [
 		{
 			"type": "virtualbox-iso",
 			"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}.iso",
 			"guest_os_type": "Ubuntu_64",
+			"headless": "{{user `headless`}}",
 			"iso_checksum": "{{user `iso_checksum`}}",
 			"iso_checksum_type": "md5",
 			"ssh_username": "{{user `user`}}",
@@ -44,6 +46,7 @@
 			]
 		}, {
 			"type": "qemu",
+			"headless": "{{user `headless`}}",
 			"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}.iso",
 			"iso_checksum": "{{user `iso_checksum`}}",
 			"iso_checksum_type": "md5",
@@ -67,7 +70,6 @@
 				"../scripts"
 			],
 			"format": "qcow2",
-			"headless": false,
 			"accelerator": "kvm",
 			"net_device": "virtio-net",
 			"disk_interface": "virtio",
