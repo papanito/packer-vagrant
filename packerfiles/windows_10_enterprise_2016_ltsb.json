@@ -1,0 +1,54 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "user": "packer",
+    "pwd": null,
+    "winrm_timeout": "2000s",
+    "iso_name": null,
+    "iso_mirror": "http://artifact-repo/unattended/iso/",
+	"iso_checksum": "031ED6ACDC47B8F582C781B039F501D83997A1CF",
+	"iso_checksum_type": "sha1",
+	"preseed_name": "windows_10_x64.cfg",
+	"preseed_mirror": "http://artifact-repo/unattended/",
+	"shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+	"headless": "true"
+  },
+  "builders": [
+	{
+		"type": "virtualbox-iso",
+		"iso_url": "{{user `iso_mirror`}}{{user `iso_name`}}.iso",
+		"guest_os_type": "Windows10_64",
+		"headless": "{{user `headless`}}",
+		"iso_checksum": "{{user `iso_checksum`}}",
+		"iso_checksum_type": "{{user `iso_checksum_type`}}",
+		"communicator": "winrm",
+		"winrm_username": "{{user `user`}}",
+		"winrm_password": "{{user `pwd`}}", 
+		"winrm_timeout": "{{user `winrm_timeout`}}",
+		"boot_wait": "5s",
+		"floppy_dirs": [
+			"../unattended/Windows/10",
+			"../scripts"
+		], 
+		"shutdown_command": "{{user `shutdown_command`}}",
+		"vboxmanage": [
+			["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
+		]
+	}
+  ],
+  "provisioners": [
+  	{
+  		"type": "shell",
+		"inline": [
+			"echo 'my additional provisioning steps'"
+		]
+  	}
+  ],
+  "post-processors": [
+    {
+		"type": "vagrant",
+		"output": "../boxes/{{user `iso_name`}}/{{user `iso_name`}}-{{.Provider}}.box"
+    }
+  ]
+}

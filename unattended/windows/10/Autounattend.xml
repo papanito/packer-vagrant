@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UILanguage>de-CH</UILanguage>
+            <SystemLocale>de-CH</SystemLocale>
+            <InputLocale>de-CH</InputLocale>
+            <UILanguageFallback>en-US</UILanguageFallback>
+            <UserLocale>de-CH</UserLocale>
+        </component>
+    </settings>
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UpgradeData>
+                <Upgrade>true</Upgrade>
+                <WillShowUI>Always</WillShowUI>
+            </UpgradeData>
+            <UserData>
+                <ProductKey>
+                    <Key>QFFDN-GRT3P-VKWWX-X7T3R-8B639</Key>
+                    <WillShowUI>Never</WillShowUI>
+                </ProductKey>
+            </UserData>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="wim:d:/workspaces/packer-vagrant/wim/install_windows%2010%20enterprise%20n%202016%20ltsb.wim#Windows 10 Enterprise N 2016 LTSB" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+</unattend>
