@@ -82,8 +82,8 @@
 	"provisioners": [
 		{
 			"type": "shell",
-			"inline": [
-				"echo 'my additional provisioning steps'"
+			"scripts": [
+				"scripts/ubuntu.sh"
 			]
 		}
 	],
