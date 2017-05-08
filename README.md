@@ -79,7 +79,7 @@ Files follow simple naming convention:
 ```<distor>_<version>_<locale>_<additional info>_cfg```
 
 ### Windows
-As windows relies on a fixed name "Autounattended.xml", they are divided in sub folders (1 per Windows version).
+As windows relies on a fixed name "Unattend.xml" or "Autounattended.xml" respectively, they are divided in sub folders (1 per Windows version). YOu may wonder why you may need two files, I recommend read trough https://technet.microsoft.com/en-us/library/cc749415(v=ws.10).aspx
 
 Product keys for Windows eventually need to be updated. I currently use the ones mentioned here:
 http://technet.microsoft.com/en-us/library/jj612867.aspx
