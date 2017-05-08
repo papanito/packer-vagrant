@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
-    <settings pass="specialize">
-        <component name="Microsoft-Windows-International-Core" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <UILanguage>de-CH</UILanguage>
-            <SystemLocale>de-CH</SystemLocale>
-            <InputLocale>de-CH</InputLocale>
-            <UILanguageFallback>en-US</UILanguageFallback>
-            <UserLocale>de-CH</UserLocale>
-        </component>
-    </settings>
     <settings pass="windowsPE">
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <UpgradeData>
@@ -17,10 +8,67 @@
             </UpgradeData>
             <UserData>
                 <ProductKey>
+                    <!-- License Keys: https://technet.microsoft.com/en-us/library/jj612867%28v=ws.11%29.aspx?f=255&MSPPError=-2147217396 -->
                     <Key>QFFDN-GRT3P-VKWWX-X7T3R-8B639</Key>
                     <WillShowUI>Never</WillShowUI>
                 </ProductKey>
+                <AcceptEula>true</AcceptEula>
+                <Organization>papanito&apos;s</Organization>
+                <FullName>papanito</FullName>
             </UserData>
+            <ComplianceCheck>
+                <DisplayReport>Never</DisplayReport>
+            </ComplianceCheck>
+            <Diagnostics>
+                <OptIn>true</OptIn>
+            </Diagnostics>
+            <DiskConfiguration>
+                <WillShowUI>Never</WillShowUI>
+                <DisableEncryptedDiskProvisioning>false</DisableEncryptedDiskProvisioning>
+                <Disk wcm:action="add">
+                    <CreatePartitions>
+                        <CreatePartition wcm:action="add">
+                            <Order>1</Order>
+                            <Type>Primary</Type>
+                            <Size>81920</Size>
+                            <Extend>false</Extend>
+                        </CreatePartition>
+                    </CreatePartitions>
+                    <ModifyPartitions>
+                        <ModifyPartition wcm:action="add">
+                            <Active>true</Active>
+                            <Extend>false</Extend>
+                            <Format>FAT32</Format>
+                            <Label>System</Label>
+                            <Letter>C</Letter>
+                            <Order>1</Order>
+                            <PartitionID>1</PartitionID>
+                            <TypeID></TypeID>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <WillWipeDisk>false</WillWipeDisk>
+                    <DiskID>1</DiskID>
+                </Disk>
+            </DiskConfiguration>
+            <DynamicUpdate>
+                <Enable>true</Enable>
+                <WillShowUI>Never</WillShowUI>
+            </DynamicUpdate>
+            <EnableFirewall>true</EnableFirewall>
+            <EnableNetwork>true</EnableNetwork>
+            <LogPath>C:\Logs</LogPath>
+            <Restart>Restart</Restart>
+        </component>
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+                <WillShowUI>Never</WillShowUI>
+            </SetupUILanguage>
+            <InputLocale>de-CH</InputLocale>
+            <SystemLocale>de-CH</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UILanguageFallback>en-US</UILanguageFallback>
+            <UserLocale>en-US</UserLocale>
         </component>
     </settings>
     <cpi:offlineImage cpi:source="wim:d:/workspaces/packer-vagrant/wim/install_windows%2010%20enterprise%20n%202016%20ltsb.wim#Windows 10 Enterprise N 2016 LTSB" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
