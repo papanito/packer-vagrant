@@ -82,10 +82,21 @@ Files follow simple naming convention:
 ```<distor>_<version>_<locale>_<additional info>_cfg```
 
 ### Windows
-As windows relies on a fixed name "Unattend.xml" or "Autounattended.xml" respectively, they are divided in sub folders (1 per Windows version). YOu may wonder why you may need two files, I recommend read trough https://technet.microsoft.com/en-us/library/cc749415(v=ws.10).aspx
+There are two ways to map the unattended files on floppy:
+```
+"floppy_dirs": [
+    "unattended/Windows/10/*"
+]
+```
+Keep attention to use the wildcard * otherwise unattended installation will not kick in. Alternatively you can map the files individually
+```
+"floppy_files": [
+    "unattended/Windows/10/Autounattend.xml",
+    "unattended/Windows/10/Unattend.xml"
+]
+```
 
-Product keys for Windows eventually need to be updated. I currently use the ones mentioned here:
-http://technet.microsoft.com/en-us/library/jj612867.aspx
+For detailed information about the windows answer files check out related README.md file.
 
 ## vagrantfiles
 TBD
