@@ -2,8 +2,11 @@ Example templates for Vagrant and Packer.
 # Intro
 There are already some existing GitHub projects providing templates to create machines with Packer. However I created this project for learning purposes . In addition to the packer documentation I also took some inspiration from these great projects:
 https://github.com/kaorimatz/packer-templates
+
 https://github.com/mwrock/packer-templates
+
 https://github.com/MattHodge/PackerTemplates
+
 https://github.com/jacqinthebox/packer-templates
 
 # Structure
