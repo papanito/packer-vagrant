@@ -28,15 +28,21 @@ https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desk
 
 https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/automate-windows-setup
 
+![alt text](https://i-msdn.sec.s-msft.com/en-us/windows/hardware/commercialize/manufacture/desktop/images/dep-win8-l-configpassesandexes.jpg "configuration passes")
+
 ## windowsPE
 https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/windowspe
 
 This pass is triggered when booting the Windows Setup media (.iso) . As we don't use a [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/winpe-intro](Windows PE) we do not use Windows PE options but only Windows Setup options.
 
 - Partition and format a hard disk.
+Reference: https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration
 -- Single NTFS partition with a size of 80GB
--- https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration
+-- 
 https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-createpartitions-createpartition
+
+
+
 
 Order: starting with 1 and increasing
 - Select a specific Windows image to install, the path of that image, and any credentials required to access that image.
@@ -46,3 +52,18 @@ Order: starting with 1 and increasing
 - Apply a product key and administrator password.
 --
 - Run specific commands during Windows Setup.
+
+## oobeSytem (Out-Of-the-Box-Experience)
+https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/oobesystem
+
+# Common Errors and Troubleshooting
+Unfortunately the validation of the Windows System Image Manager does not point out all possible issues. So it is sometimes a trial and error until you get a working answer file.
+
+## Windows cannot parse the unattend answer file's <DiskConfiguration> setting
+Some settings just don't go together unfortunately with this message it is not really clear what's wrong.
+- often empty values cause this problem so instead remove settingsnot used by "Revert changes". The difference of both is "Revert changes" also removes the tag in the xml while with an empty value there is still a tag in the xml
+- I tried TypeID "Primary" in in the [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-modifypartitionsDisk( Configuration > Disk > Modify Partition) but unfortunatley it caused the error. Removing it solved it.
+
+
+## "Select OS" dialog is shown
+Unattended installation stopped quite early and showd "Select OS" screen. This is caused on no image source is specified so follow the instruction under https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-imageinstall-osimage
