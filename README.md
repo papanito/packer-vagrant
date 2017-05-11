@@ -24,7 +24,7 @@ https://github.com/jacqinthebox/packer-templates
 ```
 
 ## packerfiles
-I have .json file per OS version (e.g. Ubuntu 16.04 and Ubuntu 16.10). For different variations of a system (e.g. Ubuntu Desktop 32-bit or 64-bit, Ubuntu Server, Windows 10 Enterprise 2016 LTSB, Windows 10 Enterprise 2016 N LTSB, ...) I have a separate config file with specific parameters like ISO name and Checksum. So a creation of a base image is called with appropriate -var-file. Example:
+I have .json file per OS version (e.g. Ubuntu 17.04 and Ubuntu 16.10). For different variations of a system (e.g. Ubuntu Desktop 32-bit or 64-bit, Ubuntu Server, Windows 10 Enterprise 2016 LTSB, Windows 10 Enterprise 2016 N LTSB, ...) I have a separate config file with specific parameters like ISO name and Checksum. So a creation of a base image is called with appropriate -var-file. Example:
 ```
 packer build -var-file=iso/windows_10_enterprise_2016_ltsb_en_n_x64.cfg windows_10.json
 packer build -var-file=iso/ubuntu_16.10_x64_server.cfg ubuntu_16.10.json
@@ -79,7 +79,7 @@ https://wyssmann.com/unattended/
 
 ### Linux
 Files follow simple naming convention:
-```<distor>_<version>_<locale>_<additional info>_cfg```
+```<distro>_<version>_<locale>_<additional info>_cfg```
 
 ### Windows
 There are two ways to map the unattended files on floppy:

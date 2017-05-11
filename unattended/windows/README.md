@@ -28,6 +28,21 @@ https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desk
 
 https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/automate-windows-setup
 
-## windowsPE stage
+## windowsPE
+https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/windowspe
 
-...
+This pass is triggered when booting the Windows Setup media (.iso) . As we don't use a [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/winpe-intro](Windows PE) we do not use Windows PE options but only Windows Setup options.
+
+- Partition and format a hard disk.
+-- Single NTFS partition with a size of 80GB
+-- https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration
+https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-createpartitions-createpartition
+
+Order: starting with 1 and increasing
+- Select a specific Windows image to install, the path of that image, and any credentials required to access that image.
+--
+- Select a partition on the destination computer where you install Windows.
+-- 
+- Apply a product key and administrator password.
+--
+- Run specific commands during Windows Setup.
