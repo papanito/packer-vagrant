@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <servicing></servicing>
     <settings pass="windowsPE">
         <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <UpgradeData>
                 <Upgrade>true</Upgrade>
-                <WillShowUI>Always</WillShowUI>
+                <WillShowUI>Never</WillShowUI>
             </UpgradeData>
             <UserData>
                 <ProductKey>
@@ -24,30 +25,26 @@
             </Diagnostics>
             <DiskConfiguration>
                 <WillShowUI>Never</WillShowUI>
-                <DisableEncryptedDiskProvisioning>false</DisableEncryptedDiskProvisioning>
                 <Disk wcm:action="add">
                     <CreatePartitions>
                         <CreatePartition wcm:action="add">
                             <Order>1</Order>
                             <Type>Primary</Type>
-                            <Size>81920</Size>
-                            <Extend>false</Extend>
+                            <Extend>true</Extend>
                         </CreatePartition>
                     </CreatePartitions>
                     <ModifyPartitions>
                         <ModifyPartition wcm:action="add">
                             <Active>true</Active>
-                            <Extend>false</Extend>
-                            <Format>FAT32</Format>
+                            <Format>NTFS</Format>
                             <Label>System</Label>
                             <Letter>C</Letter>
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
-                            <TypeID></TypeID>
                         </ModifyPartition>
                     </ModifyPartitions>
-                    <WillWipeDisk>false</WillWipeDisk>
-                    <DiskID>1</DiskID>
+                    <WillWipeDisk>true</WillWipeDisk>
+                    <DiskID>0</DiskID>
                 </Disk>
             </DiskConfiguration>
             <DynamicUpdate>
@@ -58,17 +55,81 @@
             <EnableNetwork>true</EnableNetwork>
             <LogPath>C:\Logs</LogPath>
             <Restart>Restart</Restart>
+            <RunAsynchronous>
+                <RunAsynchronousCommand wcm:action="add">
+                    <Path>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\bootstrap.ps1</Path>
+                    <Order>1</Order>
+                    <Description>WinRM</Description>
+                </RunAsynchronousCommand>
+            </RunAsynchronous>
+            <ImageInstall>
+                <OSImage>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>Windows 10 Enterprise N 2016 LTSB</Value>
+                        </MetaData>
+                    </InstallFrom>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>1</PartitionID>
+                    </InstallTo>
+                </OSImage>
+            </ImageInstall>
         </component>
         <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <SetupUILanguage>
                 <UILanguage>en-US</UILanguage>
-                <WillShowUI>Never</WillShowUI>
             </SetupUILanguage>
+            <InputLocale>de-CH</InputLocale>
+            <UILanguageFallback>en-US</UILanguageFallback>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>de-CH</UserLocale>
+            <SystemLocale>ch-DE</SystemLocale>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <InputLocale>de-CH</InputLocale>
             <SystemLocale>de-CH</SystemLocale>
             <UILanguage>en-US</UILanguage>
             <UILanguageFallback>en-US</UILanguageFallback>
-            <UserLocale>en-US</UserLocale>
+            <UserLocale>de-CH</UserLocale>
+        </component>
+    </settings>
+    <settings pass="offlineServicing">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <OfflineUserAccounts>
+                <OfflineAdministratorPassword>
+                    <Value>dgBhAGcAcgBhAG4AdABPAGYAZgBsAGkAbgBlAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+                    <PlainText>false</PlainText>
+                </OfflineAdministratorPassword>
+                <OfflineLocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Password>
+                            <Value>dgBhAGcAcgBhAG4AdABQAGEAcwBzAHcAbwByAGQA</Value>
+                            <PlainText>false</PlainText>
+                        </Password>
+                        <DisplayName>vagrant</DisplayName>
+                        <Name>vagrant</Name>
+                        <Description>Default vagrant user</Description>
+                        <Group>Administrators</Group>
+                    </LocalAccount>
+                </OfflineLocalAccounts>
+            </OfflineUserAccounts>
+        </component>
+    </settings>
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DesktopOptimization>
+                <GoToDesktopOnSignIn>true</GoToDesktopOnSignIn>
+            </DesktopOptimization>
+            <OOBE>
+                <ProtectYourPC>2</ProtectYourPC>
+                <HideEULAPage>true</HideEULAPage>
+                <HideOnlineAccountScreens>false</HideOnlineAccountScreens>
+                <NetworkLocation>Work</NetworkLocation>
+            </OOBE>
         </component>
     </settings>
     <cpi:offlineImage cpi:source="wim:d:/workspaces/packer-vagrant/wim/install_windows%2010%20enterprise%20n%202016%20ltsb.wim#Windows 10 Enterprise N 2016 LTSB" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
