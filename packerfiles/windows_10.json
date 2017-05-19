@@ -28,8 +28,8 @@
 			"winrm_timeout": "{{user `winrm_timeout`}}",
 			"boot_wait": "5s",
 			"floppy_dirs": [
-				"../unattended/Windows/10",
-				"../scripts"
+				"./unattended/Windows/10/*",
+				"./scripts/*"
 			], 
 			"shutdown_command": "{{user `shutdown_command`}}",
 			"vboxmanage": [
@@ -41,7 +41,7 @@
 		{
 			"type": "shell",
 				"scripts": [
-				"scripts/windows10.ps1"
+				"packerfiles/scripts/windows10.ps1"
 			] 
 		}
   ],
