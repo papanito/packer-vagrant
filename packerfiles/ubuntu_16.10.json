@@ -45,7 +45,8 @@
 			"shutdown_command": "echo '{{user `pwd`}}' | {{user `shutdown_command`}}",
 			"vboxmanage": [
 				["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
-			]
+			],
+			"vm_name": "{{user `iso_name`}}-{{.Provider}}"
 		}, {
 			"type": "qemu",
 			"headless": "{{user `headless`}}",
