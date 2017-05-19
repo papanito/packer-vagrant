@@ -46,7 +46,7 @@
 			"vboxmanage": [
 				["modifyvm", "{{.Name}}", "--natdnshostresolver1", "on"]
 			],
-			"vm_name": "{{user `iso_name`}}-{{.Provider}}"
+			"vm_name": "{{user `iso_name`}}"
 		}, {
 			"type": "qemu",
 			"headless": "{{user `headless`}}",
