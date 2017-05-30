@@ -55,13 +55,6 @@
             <EnableNetwork>true</EnableNetwork>
             <LogPath>C:\Logs</LogPath>
             <Restart>Restart</Restart>
-            <RunAsynchronous>
-                <RunAsynchronousCommand wcm:action="add">
-                    <Path>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\bootstrap.ps1</Path>
-                    <Order>1</Order>
-                    <Description>WinRM</Description>
-                </RunAsynchronousCommand>
-            </RunAsynchronous>
             <ImageInstall>
                 <OSImage>
                     <InstallFrom>
@@ -76,6 +69,17 @@
                     </InstallTo>
                 </OSImage>
             </ImageInstall>
+            <RunSynchronous>
+                <RunSynchronousCommand wcm:action="add">
+                    <Path> cmd.exe /c powershell -Command &quot;Set-ExecutionPolicy -ExecutionPolicy Bypass -Force&quot;</Path>
+                    <Order>1</Order>
+                    <Description>Set Execution Policy 64 Bit</Description>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Path>C:\Windows\SysWOW64\cmd.exe /c powershell -Command &quot;Set-ExecutionPolicy -ExecutionPolicy Bypass -Force&quot;</Path>
+                    <Order>2</Order>
+                </RunSynchronousCommand>
+            </RunSynchronous>
         </component>
         <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <SetupUILanguage>
@@ -141,25 +145,6 @@
                 <HideOnlineAccountScreens>false</HideOnlineAccountScreens>
                 <NetworkLocation>Work</NetworkLocation>
             </OOBE>
-            <FirstLogonCommands>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c powershell -Command "Set-ExecutionPolicy -ExecutionPolicy Bypass -Force"</CommandLine>
-                    <Description>Set Execution Policy 64 Bit</Description>
-                    <Order>1</Order>
-                    <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>C:\Windows\SysWOW64\cmd.exe /c powershell -Command "Set-ExecutionPolicy -ExecutionPolicy Bypass -Force"</CommandLine>
-                    <Description>Set Execution Policy 32 Bit</Description>
-                    <Order>2</Order>
-                    <RequiresUserInput>true</RequiresUserInput>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\bootstrap.ps1</CommandLine>
-                    <Description>Bootstrap</Description>
-                    <Order>3</Order>
-                </SynchronousCommand>
-            </FirstLogonCommands>
         </component>
     </settings>
     <cpi:offlineImage cpi:source="wim:d:/workspaces/packer-vagrant/wim/install_windows%2010%20enterprise%20n%202016%20ltsb.wim#Windows 10 Enterprise N 2016 LTSB" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
