@@ -22,7 +22,10 @@ There are already some existing GitHub projects providing templates to create ma
 ```
 
 ## packerfiles
-I have .json file per OS version (e.g. Ubuntu 17.04 and Ubuntu 16.10). For different variations of a system (e.g. Ubuntu Desktop 32-bit or 64-bit, Ubuntu Server, Windows 10 Enterprise 2016 LTSB, Windows 10 Enterprise 2016 N LTSB, ...) I have a separate config file with specific parameters like ISO name and Checksum. So a creation of a base image is called with appropriate -var-file. Example:
+For Linux boxes there is a .json file per OS version (e.g. Ubuntu 17.04 and Ubuntu 16.10).
+For Windows boxes there are always at least 3 .json files - base, updates and package - per OS version (e.g. Windows 10, Windows 2016, ...) - this is inspired by  [https://hodgkins.io/best-practices-with-packer-and-windows](https://hodgkins.io/best-practices-with-packer-and-windows). 
+
+For different variations of a system (e.g. Ubuntu Desktop 32-bit or 64-bit, Ubuntu Server, Windows 10 Enterprise 2016 LTSB, Windows 10 Enterprise 2016 N LTSB, ...) I have a separate config file with specific parameters like ISO name and Checksum. So a creation of a base image is called with appropriate -var-file. Example:
 ```
 packer build -var-file=iso/windows_10_enterprise_2016_ltsb_en_n_x64.cfg windows_10.json
 packer build -var-file=iso/ubuntu_16.10_x64_server.cfg ubuntu_16.10.json
