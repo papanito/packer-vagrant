@@ -99,13 +99,5 @@
 			"output": "../boxes/{{user `iso_name`}}/{{user `iso_name`}}-{{.Provider}}.box",
 			"keep_input_artifact": true
 		}
-	], 
-	"push": {
-		"address": "file:////dscprod.emea.roche.com/SWENG/Boxes/",
-		"name": "{{user `iso_name`}}",
-		"vcs": true,
-		"include": [
-			"include/readme.txt"
-		]
-  	}
+	] 
 }
