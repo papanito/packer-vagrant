@@ -1,0 +1,52 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "output_directory": "./output/win10-base/",
+      "vm_name": "win10-base",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "128" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ],
+      "guest_additions_mode" : "disable",
+      "headless": "{{user `headless`}}",
+      "guest_os_type": "Windows10_64",
+      "iso_url": "{{user `iso_mirror`}}//{{user `iso_name`}}.iso",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "communicator": "winrm",
+      "winrm_username": "{{user `user`}}",
+      "winrm_password": "{{user `pwd`}}",
+      "winrm_timeout": "8h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "15m",
+      "floppy_files": [
+        "answer_files/10/Autounattend.xml",
+        "./scripts/bootstrap.ps1",
+        "./scripts/oracle-cert.cer",
+        "./scripts/unattend.xml"
+      ],
+      "disk_size": "102400"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "elevated_user": "{{user `user`}}",
+      "elevated_password": "{{user `pwd`}}",
+      "script": "./scripts/windows-base.ps1"
+    }
+  ],
+  "variables": {
+    "user": "vagrant",
+		"pwd": null,
+		"iso_name": null,
+		"iso_mirror": null,
+		"iso_checksum": null,
+		"iso_checksum_type": "md5",
+		"headless": "true",
+		"keep_artifacts": "true"
+  }
+}

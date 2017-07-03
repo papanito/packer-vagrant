@@ -1,0 +1,56 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "./output/win2016-base/vbox-win2016-base.ovf",
+      "output_directory": "./output/win2016-updates/",
+      "vm_name": "vbox-win2016-updates",
+      "guest_additions_mode" : "disable",
+      "headless": true, 
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "128" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+       ],
+       "communicator": "winrm",
+       "winrm_username": "{{user `user`}}",
+       "winrm_password": "{{user `pwd`}}",
+       "winrm_timeout": "12h",
+       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+       "shutdown_timeout": "1h",
+       "communicator": "winrm"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "elevated_user": "{{user `user`}}",
+      "elevated_password": "{{user `pwd`}}",
+      "script": "./scripts/windows-updates.ps1"
+    },
+  {
+     "type": "windows-restart",
+     "restart_timeout": "1h"
+   },
+   {
+     "type": "powershell",
+     "elevated_user": "{{user `user`}}",
+     "elevated_password": "{{user `pwd`}}",
+     "inline": ["Get-WUInstall -MicrosoftUpdate -AcceptAll -IgnoreReboot"]
+   },
+   {
+    "type": "windows-restart",
+    "restart_timeout": "1h"
+  },
+  {
+    "type": "powershell",
+    "elevated_user": "{{user `user`}}",
+    "elevated_password": "{{user `pwd`}}",
+    "inline": ["Get-WUInstall -MicrosoftUpdate -AcceptAll -IgnoreReboot"]
+  },
+  {
+   "type": "windows-restart",
+   "restart_timeout": "1h"
+  }
+ ]
+}
