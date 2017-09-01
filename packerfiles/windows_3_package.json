@@ -1,0 +1,58 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "./output/win{{user `winversion`}}-updates/win{{user `winversion`}}-updates.ovf",
+      "output_directory": "./output/win{{user `winversion`}}-package/",
+      "vm_name": "win{{user `winversion`}}-package",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "128" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ],
+      "guest_additions_mode" : "attach",
+      "headless": true,
+      "communicator": "winrm",
+      "winrm_username": "{{user `user`}}",
+      "winrm_password": "{{user `pwd`}}",
+      "winrm_timeout": "12h",
+      "shutdown_command": "C:/Scripts/sysprep.cmd",
+      "shutdown_timeout": "1h",
+      "floppy_files": [
+        "./wyssmann.pfx"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "powershell",
+      "elevated_user": "{{user `user`}}",
+      "elevated_password": "{{user `pwd`}}",
+      "script": "./scripts/windows-tools_and_stuff.ps1"
+    },
+    {
+      "type": "powershell",
+      "elevated_user": "{{user `user`}}",
+      "elevated_password": "{{user `pwd`}}",
+      "script": "./scripts/import-certificate.ps1"
+    },
+    {
+    "type": "windows-restart",
+    "restart_timeout": "1h"
+    },
+    {
+    "type": "powershell",
+    "elevated_user": "{{user `user`}}",
+    "elevated_password": "{{user `pwd`}}",
+    "script": "./scripts/windows-compress.ps1"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "{{user `output`}}windows-10-enterprise-N2016-ltsb.box",
+      "vagrantfile_template": "./templates/vagrantfile-windows-10.template"
+    }
+  ]
+}
