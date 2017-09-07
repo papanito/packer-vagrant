@@ -23,10 +23,8 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "15m",
       "floppy_files": [
-        "../unattended/windows/{{user `winversion`}}/Autounattend.xml",
-        "../scripts/bootstrap.ps1",
-        "../scripts/oracle-cert.cer",
-        "../unattended/windows/{{user `winversion`}}/unattend.xml"
+        "../unattended/windows/{{user `winversion`}}/*",
+        "../scripts/*"
       ],
       "disk_size": "102400"
     }
