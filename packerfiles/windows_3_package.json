@@ -37,6 +37,12 @@
       "script": "./scripts/import-certificate.ps1"
     },
     {
+      "type": "powershell",
+      "elevated_user": "{{user `user`}}",
+      "elevated_password": "{{user `pwd`}}",
+      "script": "./scripts/windows-configurewinrm.ps1"
+    },
+    {
     "type": "windows-restart",
     "restart_timeout": "1h"
     },
@@ -51,8 +57,8 @@
     {
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "{{user `output`}}windows-10-enterprise-N2016-ltsb.box",
-      "vagrantfile_template": "./templates/vagrantfile-windows-10.template"
+      //"vagrantfile_template": "./templates/vagrantfile-windows-10.template",
+      "output": "{{user `output`}}windows-10-enterprise-N2016-ltsb.box"
     }
   ]
 }
