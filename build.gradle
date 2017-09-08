@@ -4,30 +4,37 @@ plugins {
 }
 
 remotes {
-    def idfile=System.getProperty("user.home") + '/.ssh/id_rsa'
+    /*def idfile=System.getProperty("user.home") + '/.ssh/id_rsa'
     webServer {
         host = webserver
         user = webserverAdmin
         identity = file(idfile)
+    }*/
+}
+
+task build(type:Exec) {
+    buildDir= './packerfiles'
+    String osName = System.getProperty("os.name").toLowerCase()
+    String cmd = "packer build -var-file=./packerfiles/iso/windows_server_2016_standard_x64.cfg -var-file=./packerfiles/variables.cfg ./packerfiles/windows_1_base.json"
+    if (osName.contains("windows")) {
+        commandLine 'cmd','/c', cmd
+    } else {
+        commandLine cmd
     }
 }
 
-task build() {
-    // TODO
-}
-
 task deploy() {
-String osName = System.getProperty("os.name").toLowerCase();
+    String osName = System.getProperty("os.name").toLowerCase();
     if (osName.contains("windows")) {
         println "*** deploy on Winodws"
     } else {
         println "*** deploy on Linux"
     }
 
-    println "*** Copy answerfiles/preseed files to webserver"
+    /*println "*** Copy answerfiles/preseed files to webserver"
     ssh.run {
         session(remotes.webServer) {
             put from: "$projectDir/unattended/", into: targetDir
         }
-    }
+    }*/
 }
