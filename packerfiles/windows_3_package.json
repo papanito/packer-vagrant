@@ -19,7 +19,7 @@
       "shutdown_command": "C:/Scripts/sysprep.cmd",
       "shutdown_timeout": "1h",
       "floppy_files": [
-        "./wyssmann.pfx"
+        "./packerfiles/scripts"
       ]
     }
   ],
@@ -28,19 +28,19 @@
       "type": "powershell",
       "elevated_user": "{{user `user`}}",
       "elevated_password": "{{user `pwd`}}",
-      "script": "./scripts/windows-tools_and_stuff.ps1"
+      "script": "./packerfiles/scripts/windows-tools_and_stuff.ps1"
     },
     {
       "type": "powershell",
       "elevated_user": "{{user `user`}}",
       "elevated_password": "{{user `pwd`}}",
-      "script": "./scripts/import-certificate.ps1"
+      "script": "./packerfiles/scripts/import-certificate.ps1"
     },
     {
       "type": "powershell",
       "elevated_user": "{{user `user`}}",
       "elevated_password": "{{user `pwd`}}",
-      "script": "./scripts/windows-configurewinrm.ps1"
+      "script": "./packerfiles/scripts/windows-configurewinrm.ps1"
     },
     {
     "type": "windows-restart",
@@ -50,7 +50,7 @@
     "type": "powershell",
     "elevated_user": "{{user `user`}}",
     "elevated_password": "{{user `pwd`}}",
-    "script": "./scripts/windows-compress.ps1"
+    "script": "./packerfiles/scripts/windows-compress.ps1"
     }
   ],
   "post-processors": [
@@ -58,7 +58,7 @@
       "type": "vagrant",
       "keep_input_artifact": true,
       //"vagrantfile_template": "./templates/vagrantfile-windows-10.template",
-      "output": "{{user `output`}}windows-10-enterprise-N2016-ltsb.box"
+      "output": "{{user `output`}}.box"
     }
   ]
 }

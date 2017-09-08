@@ -4,7 +4,7 @@
       "type": "virtualbox-ovf",
       "source_path": "./output/win{{user `winversion`}}-base/win{{user `winversion`}}-base.ovf",
       "output_directory": "./output/win{{user `winversion`}}-updates/",
-      "vm_name": "win10-updates",
+      "vm_name": "win{{user `winversion`}}-updates",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
         [ "modifyvm", "{{.Name}}", "--vram", "128" ],
@@ -25,7 +25,7 @@
       "type": "powershell",
       "elevated_user": "{{user `user`}}",
       "elevated_password": "{{user `pwd`}}",
-      "script": "./scripts/windows-updates.ps1"
+      "script": "./packerfiles/scripts/windows-updates.ps1"
    },
    {
      "type": "windows-restart",

@@ -24,7 +24,7 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "../unattended/windows/{{user `winversion`}}/*",
-        "../scripts/*"
+        "../packerfiles/scripts/*"
       ],
       "disk_size": "102400"
     }
@@ -34,7 +34,7 @@
       "type": "powershell",
       "elevated_user": "{{user `user`}}",
       "elevated_password": "{{user `pwd`}}",
-      "script": "./scripts/windows-base.ps1"
+      "script": "./packerfiles/scripts/windows-base.ps1"
     }
   ],
   "variables": {
