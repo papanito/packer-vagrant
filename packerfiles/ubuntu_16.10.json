@@ -69,8 +69,8 @@
 					"<enter>"
 				], 
 			"floppy_dirs": [
-				"../unattended",
-				"../scripts"
+				"./unattended",
+				"./scripts"
 			],
 			"format": "qcow2",
 			"accelerator": "kvm",
@@ -96,7 +96,7 @@
 		},
 		{
 			"type": "vagrant",
-			"output": "../boxes/{{user `iso_name`}}/{{user `iso_name`}}-{{.Provider}}.box",
+			"output": "./boxes/{{user `iso_name`}}/{{user `iso_name`}}-{{.Provider}}.box",
 			"keep_input_artifact": true
 		}
 	] 
