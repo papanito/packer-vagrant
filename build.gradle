@@ -13,14 +13,18 @@ remotes {
 }
 
 task build(type:Exec) {
-    buildDir= './packerfiles'
-    String osName = System.getProperty("os.name").toLowerCase()
-    String cmd = "packer build -var-file=./packerfiles/iso/windows_server_2016_standard_x64.cfg -var-file=./packerfiles/variables.cfg ./packerfiles/windows_1_base.json"
+    String osName = System.getProperty("os.name").toLowerCase();
     if (osName.contains("windows")) {
-        commandLine 'cmd','/c', cmd
+        executable = "packer"
     } else {
-        commandLine cmd
+        executable = "packer-io"
     }
+
+    args = ["build", 
+        "-var-file=./packerfiles/iso/windows_server_2016_standard_x64.cfg", 
+        "-var-file=./packerfiles/variables.cfg", 
+        "./packerfiles/windows_1_base.json" ]
+    commandLine
 }
 
 task deploy() {
