@@ -28,7 +28,7 @@ The file is divided in different sections called “Configuration passes” and 
 ## windowsPE
 https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/windowspe
 
-This pass is triggered when booting the Windows Setup media (.iso) . As we don't use a [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/winpe-intro](Windows PE) we do not need Windows PE options but only Windows Setup options.
+This pass is triggered when booting the Windows Setup media (.iso). As we don't use a [Windows PE](https://msdn.microsoft.com/en-us/windows/hardware/commercialize/manufacture/desktop/winpe-intro) we do not need Windows PE options but only Windows Setup options.
 So this is what we do:
 ### Partition and format a hard disk.
 Reference: https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration
@@ -86,14 +86,14 @@ Unfortunately the validation of the Windows System Image Manager does not point 
 ## Windows cannot parse the unattend answer file's <DiskConfiguration> setting
 Some settings just don't go together unfortunately with this message it is not really clear what's wrong.
 * often empty values cause this problem so instead remove settingsnot used by "Revert changes". The difference of both is "Revert changes" also removes the tag in the xml while with an empty value there is still a tag in the xml
-* I tried TypeID "Primary" in in the [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-modifypartitionsDisk](Configuration > Disk > Modify Partition) but unfortunatley it caused the error. Removing it solved it.
+* I tried TypeID "Primary" in in the [Configuration > Disk > Modify Partition](https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-setup-diskconfiguration-disk-modifypartitionsDisk) but unfortunatley it caused the error. Removing it solved it.
 
 
 ## "Select OS" dialog is shown
 Unattended installation stopped quite early and showd "Select OS" screen. This is caused if no image source is specified.
 
 ## "Get Going Fast" page opens during setup
-This happens if there is no default valueset for [https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-shell-setup-oobe-protectyourpc?f=255&MSPPError=-2147217396](ProtectYourPC)
+This happens if there is no default valueset for [ProtectYourPC](https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/desktop/unattend/microsoft-windows-shell-setup-oobe-protectyourpc?f=255&MSPPError=-2147217396)
 
 ## "Other user" is shwon after first login
 ...
@@ -112,7 +112,9 @@ You missed to specify the "group" in the "Offline User Accounts" settings.
 ## Problems parsing unattend file
 Under certain circumstances you may get the following or a similar error after first reboot of the unattended installation:
 
-```Windows could not parse or process the unattend answer file for pass [specialize]. The settings specified in the answer file cannot be applied.```
+```
+Windows could not parse or process the unattend answer file for pass [specialize]. The settings specified in the answer file cannot be applied.$
+```
 
 This means there is something wrong with your unnattend.xml or Autounattend.xml respectively. There is no generic solution to the problem but rather needs you to debug the problem. For this you can open a terminal by pressing [Shift]+[F10]. From the terminal you can open the log file `c:\windows\panther\setupact.log` or `c:\windows\panther\unattendGC\setupact.log` respectively using the command
 
