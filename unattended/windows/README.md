@@ -16,7 +16,7 @@ More info to language locales:
 https://msdn.microsoft.com/en-us/library/dd318693(v=vs.85).aspx
 
 More info to timezone identifiers:
-https://technet.microsoft.com/en-us/library/cc749073(v=ws.10).aspx
+https://msdn.microsoft.com/en-us/library/ms912391%28v=winembedded.11%29.aspx?f=255&MSPPError=-2147217396
 
 # Passes
 The file is divided in different sections called “Configuration passes” and are used to specify different phases of the Windows Setup. More info to this can be found at MSDN:
@@ -108,3 +108,14 @@ You missed to specify the "group" in the "Offline User Accounts" settings.
     </LocalAccount>
 </OfflineLocalAccounts>
 ```
+
+## Problems parsing unattend file
+Under certain circumstances you may get the following or a similar error after first reboot of the unattended installation:
+
+```Windows could not parse or process the unattend answer file for pass [specialize]. The settings specified in the answer file cannot be applied.```
+
+This means there is something wrong with your unnattend.xml or Autounattend.xml respectively. There is no generic solution to the problem but rather needs you to debug the problem. For this you can open a terminal by pressing [Shift]+[F10]. From the terminal you can open the log file `c:\windows\panther\setupact.log` or `c:\windows\panther\unattendGC\setupact.log` respectively using the command
+
+```notepad c:\windows\panther\setupact.log```
+
+Checkout for terms like "error", "not defined" and "not found" and analyze related messages in the log file.
