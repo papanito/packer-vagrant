@@ -1,5 +1,5 @@
-# This script is called from the answerfile
-
+# This script is called from the answerfile and does essential configuration for WinRM to be available.
+#
 # You cannot enable Windows PowerShell Remoting on network connections that are set to Public
 # http://msdn.microsoft.com/en-us/library/windows/desktop/aa370750(v=vs.85).aspx
 # http://blogs.msdn.com/b/powershell/archive/2009/04/03/setting-network-location-to-private.aspx
@@ -39,7 +39,6 @@ Function Enable-WinRM {
     net stop winrm
     sc.exe config winrm start= auto
     net start winrm
-
 }
 
 Get-WmiObject -Class Win32_UserAccount -Filter "name = 'vagrant'" | Set-WmiInstance -Arguments @{PasswordExpires = 0 }
