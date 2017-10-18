@@ -67,8 +67,8 @@
                     <Key>C3RCX-M6NRP-6CXC9-TW2F2-4RHYD</Key>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
-                <FullName>wyssmann</FullName>
-                <Organization>wyssmann</Organization>
+                <FullName>papanito</FullName>
+                <Organization>wyssmann.com</Organization>
             </UserData>
         </component>
     </settings>
@@ -78,9 +78,9 @@
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
             <ComputerName>vagrant-2016</ComputerName>
-            <TimeZone>Pacific Standard Time</TimeZone>
-            <Organization>papanito&apos;s</Organization>
-            <FullName>papanito</FullName>
+            <TimeZone>W. Europe Standard Time</TimeZone>
+            <RegisteredOwner>Papanito</RegisteredOwner>
+            <RegisteredOrganization>Wyssmann.com</RegisteredOrganization>
         </component>
         <component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
