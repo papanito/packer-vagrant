@@ -38,7 +38,7 @@ task buildWindowsUpdates(type:Exec, dependsOn: "buildWindowsBase") {
 }
 
 task buildWindowsPackages(type:Exec, dependsOn: "buildWindowsUpdates") {
-    println "Task buildWindows"
+    println "Task buildWindowsPackages"
     executable = project.ext.packer
     args = ["build", 
         "-var-file=./packerfiles/iso/$configFile", 
