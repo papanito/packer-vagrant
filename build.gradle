@@ -1,44 +1,48 @@
-
-plugins {
-  id 'org.hidetake.ssh' version '2.8.0'
-}
-
-remotes {
-    /*def idfile=System.getProperty("user.home") + '/.ssh/id_rsa'
-    webServer {
-        host = webserver
-        user = webserverAdmin
-        identity = file(idfile)
-    }*/
-}
-
 task build(type:Exec) {
+    println "Task build"
+    //executable = "dir"
+    //args = [ "packerfiles/iso" ]
+    //println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
     String osName = System.getProperty("os.name").toLowerCase();
-    if (osName.contains("windows")) {
-        executable = "packer"
-    } else {
-        executable = "packer-io"
+    if (!osName.contains("windows")) {
+        ext.packer = "packer-io"
     }
+}
 
+project.ext {
+    packer = 'packer'
+}
+
+task buildWindows(dependsOn: "buildWindowsPackages") {
+    println "Task buildWindows"
+}
+
+task buildWindowsBase(type:Exec) {
+    println "Task buildWindowsBase"
+    executable = project.ext.packer
     args = ["build", 
-        "-var-file=./packerfiles/iso/windows_server_2016_standard_x64.cfg", 
+        "-var-file=./packerfiles/iso/$configFile", 
         "-var-file=./packerfiles/variables.cfg", 
         "./packerfiles/windows_1_base.json" ]
     commandLine
 }
 
-task deploy() {
-    String osName = System.getProperty("os.name").toLowerCase();
-    if (osName.contains("windows")) {
-        println "*** deploy on Winodws"
-    } else {
-        println "*** deploy on Linux"
-    }
+task buildWindowsUpdates(type:Exec, dependsOn: "buildWindowsBase") {
+    println "Task buildWindowsUpdates"
+    executable = project.ext.packer
+    args = ["build", 
+        "-var-file=./packerfiles/iso/$configFile", 
+        "-var-file=./packerfiles/variables.cfg", 
+        "./packerfiles/windows_2_updates.json" ]
+    commandLine
+}
 
-    /*println "*** Copy answerfiles/preseed files to webserver"
-    ssh.run {
-        session(remotes.webServer) {
-            put from: "$projectDir/unattended/", into: targetDir
-        }
-    }*/
+task buildWindowsPackages(type:Exec, dependsOn: "buildWindowsUpdates") {
+    println "Task buildWindows"
+    executable = project.ext.packer
+    args = ["build", 
+        "-var-file=./packerfiles/iso/$configFile", 
+        "-var-file=./packerfiles/variables.cfg", 
+        "./packerfiles/windows_3_package.json" ]
+    commandLine
 }
