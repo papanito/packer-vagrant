@@ -7,18 +7,19 @@ There are already some existing GitHub projects providing templates to create ma
 * https://github.com/jacqinthebox/packer-templates
 
 # Structure
-```
-+ images         - images for better illustration in the README.txt
-+ packerfiles    - json and cfg (variables) for packera
-| + iso          - os specific variables like iso name and checksum
-| + scripts      - scripts for provisioning machines with packer
-+ scripts        - script to be used for provisioning
-+ unattended     - preseed files for Linux and Autounattend files for Windows
-| + windows      - autounattended files for Windows
-|   + 10         - Windows 10
-|   + ...
-+ vagrantfiles 
++ [images](https://github.com/papanito/packer-vagrant/tree/master/images) - images for better illustration in the README.txt
++ [packerfiles](https://github.com/papanito/packer-vagrant/tree/master/packerfiles) - json and cfg (variables) for packera
+  + [iso](https://github.com/papanito/packer-vagrant/tree/master/packerfiles/iso) - os specific variables like iso name and checksum
+  + [scripts](https://github.com/papanito/packer-vagrant/tree/master/packerfiles/scripts) - scripts for provisioning machines with packer
++ [scripts](https://github.com/papanito/packer-vagrant/tree/master/scripts) - script to be used for provisioning
++ [unattended](https://github.com/papanito/packer-vagrant/tree/master/unattended) - preseed files for Linux and Autounattend files for Windows
+  + [windows](https://github.com/papanito/packer-vagrant/tree/master/unattended/windows) - autounattended files for Windows
+    + 10         - Windows 10
+    + ...
+  + [linux](https://github.com/papanito/packer-vagrant/tree/master/unattended/linux) - answer files for Linux
+    + Ubuntu     - Ubuntu specific files
+    + ...
++ [vagrantfiles](https://github.com/papanito/packer-vagrant/tree/master/vagrantfiles)
   + <os version> - 
-```
 
-Checkout subfolders for additional information
+Additional information can be found in the related subfolders

@@ -10,14 +10,14 @@ Files follow simple naming convention:
 There are two ways to map the unattended files on floppy:
 ```
 "floppy_dirs": [
-    "unattended/windows/10/*"
+    "unattended/windows/server-2016-std/*"
 ]
 ```
 Keep attention to use the wildcard * otherwise unattended installation will not kick in. Alternatively you can map the files individually
 ```
 "floppy_files": [
-    "unattended/windows/10/Autounattend.xml",
-    "unattended/windows/10/Unattend.xml"
+    "unattended/windows/server-2016-std/Autounattend.xml",
+    "unattended/windows/unattend.xml"
 ]
 ```
 
