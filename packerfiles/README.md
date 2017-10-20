@@ -14,7 +14,7 @@ packer build -var-file=iso/windows_10_enterprise_2016_ltsb_en_n_x64.cfg -var-fil
 packer build -var-file=iso/ubuntu_16.10_x64_server.cfg -var-file=myconfig.cfg ubuntu_16.10.json
 ```
 
-**Remark:** All packer and answer files contain ant-like tokens for username and passwords. If you want to manually create the vms as mentioned above, please replace the respective tokens with the desired values. Otherwise, use the gradle script ```build.gradle``` as described [here](https://github.com/papanito/packer-vagrant/tree/master)
+**Remark:** All packer, answer and script files contain ant-like tokens for username and passwords. If you want to manually create the vms as mentioned above, please replace the respective tokens with the desired values. Otherwise, use the gradle script ```build.gradle``` as described [here](https://github.com/papanito/packer-vagrant/tree/master)
 
 ## Remarks for Linux
 ### boot_command

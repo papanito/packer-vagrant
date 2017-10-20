@@ -127,7 +127,7 @@
                         </Password>
                         <DisplayName>@username@</DisplayName>
                         <Name>@username@</Name>
-                        <Description>Default vagrant user</Description>
+                        <Description>Default user</Description>
                         <Group>Administrators</Group>
                     </LocalAccount>
                 </OfflineLocalAccounts>

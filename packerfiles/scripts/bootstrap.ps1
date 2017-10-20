@@ -41,5 +41,5 @@ Function Enable-WinRM {
     net start winrm
 }
 
-Get-WmiObject -Class Win32_UserAccount -Filter "name = 'vagrant'" | Set-WmiInstance -Arguments @{PasswordExpires = 0 }
+Get-WmiObject -Class Win32_UserAccount -Filter "name = '@username@'" | Set-WmiInstance -Arguments @{PasswordExpires = 0 }
 Enable-WinRM

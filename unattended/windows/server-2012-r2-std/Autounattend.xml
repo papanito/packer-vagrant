@@ -123,9 +123,9 @@
                     <RequiresUserInput>true</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
+                    <CommandLine>cmd.exe /c wmic useraccount where "name='@username@'" set PasswordExpires=FALSE</CommandLine>
                     <Order>4</Order>
-                    <Description>Disable password expiration for vagrant user</Description>
+                    <Description>Disable password expiration for user @username@</Description>
                 </SynchronousCommand>
             </FirstLogonCommands>
             <UserAccounts>
