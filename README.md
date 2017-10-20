@@ -33,3 +33,5 @@ In order to build VMs with packer you can use the gradle script ```build.gradle`
 2. Call gradle to buildWindows. You have to submit a config file (form packerfiles/iso folder) which defines which distro / windows version to build
 
    ```gradle clean buildWindows -PconfigFile=windows_server_2016_standard_x64.cfg```
+
+Remark: Some characters may break the scripts e.g. using $ will break windows-base.ps1

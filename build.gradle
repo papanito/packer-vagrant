@@ -80,3 +80,15 @@ task buildWindows() {
 	dependsOn 'buildWindowsPackages'
 	tasks.findByName('buildWindowsPackages').mustRunAfter 'processResources'
 }
+
+task buildUbuntu(type:Exec) {
+	println 'Task buildUbuntu'
+	dependsOn 'processResources'
+	workingDir = buildDir
+	executable = project.ext.packer
+	args = ["build", 
+			"-var-file=./packerfiles/iso/$configFile", 
+			"-var-file=./packerfiles/variables.cfg", 
+			"./packerfiles/ubuntu_16.10.json" ]
+	commandLine
+}
