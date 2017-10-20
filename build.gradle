@@ -89,6 +89,7 @@ task buildUbuntu(type:Exec) {
 	args = ["build", 
 			"-var-file=./packerfiles/iso/$configFile", 
 			"-var-file=./packerfiles/variables.cfg", 
+			"-only=$builders", 
 			"./packerfiles/ubuntu_16.10.json" ]
 	commandLine
 }

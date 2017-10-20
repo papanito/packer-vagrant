@@ -30,7 +30,9 @@ In order to build VMs with packer you can use the gradle script ```build.gradle`
    + ```username=@username for user account to be created@```
    + ```password=@password for user account 'username'@```
    + ```rootpassword=@password for root/Administrator account@```
-2. Call gradle to buildWindows. You have to submit a config file (form packerfiles/iso folder) which defines which distro / windows version to build
+2. Define additional parameters   
+   + ```builders=@packer builders to execute e.g. virtualbox-iso@```
+3. Call gradle to buildWindows. You have to submit a config file (form packerfiles/iso folder) which defines which distro / windows version to build
 
    ```gradle clean buildWindows -PconfigFile=windows_server_2016_standard_x64.cfg```
 
