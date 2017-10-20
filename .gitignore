@@ -1,8 +1,10 @@
 # tools stuff
 .gradle
+gradle.properties
 **/packer-cache
 **/.vagrant
 **/output*
+**/build
 
 # image files
 **/*.box
