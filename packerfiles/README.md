@@ -8,11 +8,13 @@ packer build -var-file=iso/windows_10_enterprise_2016_ltsb_en_n_x64.cfg windows_
 packer build -var-file=iso/ubuntu_16.10_x64_server.cfg ubuntu_16.10.json
 ```
 
-In additon certain variables defined in the packer files are set to null and therefore should be specified when calling ```packer build```. Mainly this are user credentials and mirrors for e.g. iso files - I keep them on an internal sever which is fatster for download than over internet. There is an example config file which I usually copy and modify to my needs.
+In additon certain variables defined in the packer files are set to null and therefore should be specified when calling ```packer build```. Mainly this are user credentials and mirrors for e.g. iso files - I keep them on an internal sever which is faster for download than over internet. There is an example config file which I usually copy and modify to my needs.
 ```
 packer build -var-file=iso/windows_10_enterprise_2016_ltsb_en_n_x64.cfg -var-file=myconfig.cfg windows_10.json
 packer build -var-file=iso/ubuntu_16.10_x64_server.cfg -var-file=myconfig.cfg ubuntu_16.10.json
 ```
+
+**Remark:** All packer and answer files contain ant-like tokens for username and passwords. If you want to manually create the vms as mentioned above, please replace the respective tokens with the desired values. Otherwise, use the gradle script ```build.gradle``` as described [here](https://github.com/papanito/packer-vagrant/tree/master)
 
 ## Remarks for Linux
 ### boot_command

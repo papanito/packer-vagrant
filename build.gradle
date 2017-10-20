@@ -1,48 +1,82 @@
-task build(type:Exec) {
-    println "Task build"
-    //executable = "dir"
-    //args = [ "packerfiles/iso" ]
-    //println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
-    String osName = System.getProperty("os.name").toLowerCase();
-    if (!osName.contains("windows")) {
-        ext.packer = "packer-io"
-    }
-}
+import org.apache.tools.ant.filters.ReplaceTokens
 
+/*task build(type:Exec) {
+	println "Task build"
+	//executable = "dir"
+	//args = [ "packerfiles/iso" ]
+	//println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
+	String osName = System.getProperty("os.name").toLowerCase();
+	if (!osName.contains("windows")) {
+			ext.packer = "packer-io"
+	}
+}
+*/
 project.ext {
-    packer = 'packer'
+	packer = 'packer'
+
 }
 
-task buildWindows(dependsOn: "buildWindowsPackages") {
-    println "Task buildWindows"
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task processResources(type: Copy) {
+	from('unattended') {
+		include "**/*.xml"
+		include '**/*.cfg'
+   		into "unattended"
+	}
+	from('packerfiles') {
+		include '**/*.json'
+		include '**/*.cfg'
+		include '**/*.ps1'
+		include '**/*.sh'
+		into 'packerfiles'
+	}
+    filter(ReplaceTokens, tokens: [
+        'username': username, 
+        'password' : password,
+		'rootpassword': rootpassword
+    ])
+	into(buildDir)
 }
 
 task buildWindowsBase(type:Exec) {
-    println "Task buildWindowsBase"
-    executable = project.ext.packer
-    args = ["build", 
-        "-var-file=./packerfiles/iso/$configFile", 
-        "-var-file=./packerfiles/variables.cfg", 
-        "./packerfiles/windows_1_base.json" ]
-    commandLine
+	println "Task buildWindowsBase"
+	workingDir = buildDir
+	executable = project.ext.packer
+	args = ["build", 
+			"-var-file=./packerfiles/iso/$configFile", 
+			"-var-file=./packerfiles/variables.cfg", 
+			"./packerfiles/windows_1_base.json" ]
+	commandLine
 }
 
 task buildWindowsUpdates(type:Exec, dependsOn: "buildWindowsBase") {
-    println "Task buildWindowsUpdates"
-    executable = project.ext.packer
-    args = ["build", 
-        "-var-file=./packerfiles/iso/$configFile", 
-        "-var-file=./packerfiles/variables.cfg", 
-        "./packerfiles/windows_2_updates.json" ]
-    commandLine
+	println "Task buildWindowsUpdates"
+	workingDir = buildDir
+	executable = project.ext.packer
+	args = ["build", 
+			"-var-file=./packerfiles/iso/$configFile", 
+			"-var-file=./packerfiles/variables.cfg", 
+			"./packerfiles/windows_2_updates.json" ]
+	commandLine
 }
 
 task buildWindowsPackages(type:Exec, dependsOn: "buildWindowsUpdates") {
-    println "Task buildWindowsPackages"
-    executable = project.ext.packer
-    args = ["build", 
-        "-var-file=./packerfiles/iso/$configFile", 
-        "-var-file=./packerfiles/variables.cfg", 
-        "./packerfiles/windows_3_package.json" ]
-    commandLine
+	println "Task buildWindowsPackages"
+	workingDir = buildDir
+	executable = project.ext.packer
+	args = ["build", 
+			"-var-file=./packerfiles/iso/$configFile", 
+			"-var-file=./packerfiles/variables.cfg", 
+			"./packerfiles/windows_3_package.json" ]
+	commandLine
+}
+
+task buildWindows() {
+	println 'Task buildWindows'
+	dependsOn 'processResources'
+	dependsOn 'buildWindowsPackages'
+	tasks.findByName('buildWindowsPackages').mustRunAfter 'processResources'
 }

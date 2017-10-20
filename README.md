@@ -23,3 +23,13 @@ There are already some existing GitHub projects providing templates to create ma
   + <os version> - 
 
 Additional information can be found in the related subfolders
+
+# Build
+In order to build VMs with packer you can use the gradle script ```build.gradle``` as follows
+1. Add a gradle.properties file and define the following values. The values represent tokens which will be replaced in respective answer and packer files
++ username=@username for user account to be created@
++ password=@password for user account 'username'@
++ rootpassword=@password for root/Administrator account@
+2. Call gradle to buildWindows. You have to submit a config file (form packerfiles/iso folder) which defines which distro / windows version to build
+
+   ```gradle clean buildWindows -PconfigFile=windows_server_2016_standard_x64.cfg```
