@@ -103,12 +103,12 @@
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <AutoLogon>
                 <Password>
-                    <Value>dgBhAGcAcgBhAG4AdABQAGEAcwBzAHcAbwByAGQA</Value>
-                    <PlainText>false</PlainText>
+                    <Value>@password@</Value>
+                    <PlainText>true</PlainText>
                 </Password>
                 <Enabled>true</Enabled>
                 <LogonCount>1</LogonCount>
-                <Username>vagrant</Username>
+                <Username>@username@</Username>
             </AutoLogon>
         </component>
     </settings>
@@ -116,17 +116,17 @@
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <OfflineUserAccounts>
                 <OfflineAdministratorPassword>
-                    <Value>dgBhAGcAcgBhAG4AdABPAGYAZgBsAGkAbgBlAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAUABhAHMAcwB3AG8AcgBkAA==</Value>
-                    <PlainText>false</PlainText>
+                    <Value>@rootpassword@</Value>
+                    <PlainText>true</PlainText>
                 </OfflineAdministratorPassword>
                 <OfflineLocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Password>
-                            <Value>dgBhAGcAcgBhAG4AdABQAGEAcwBzAHcAbwByAGQA</Value>
-                            <PlainText>false</PlainText>
+                            <Value>@password@</Value>
+                            <PlainText>true</PlainText>
                         </Password>
-                        <DisplayName>vagrant</DisplayName>
-                        <Name>vagrant</Name>
+                        <DisplayName>@username@</DisplayName>
+                        <Name>@username@</Name>
                         <Description>Default vagrant user</Description>
                         <Group>Administrators</Group>
                     </LocalAccount>

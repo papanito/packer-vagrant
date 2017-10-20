@@ -24,7 +24,7 @@
                 <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <TimeZone>W. Europe Standard Time</TimeZone>
-            <UserAccounts>
+            <!--UserAccounts>
                 <AdministratorPassword>
                     <Value>dgBhAGcAcgBhAG4AdABQAGEAcwBzAHcAbwByAGQA</Value>
                     <PlainText>false</PlainText>
@@ -41,7 +41,7 @@
                         <Description>Vagrant User</Description>
                     </LocalAccount>
                 </LocalAccounts>
-            </UserAccounts>
+            </UserAccounts-->
         </component>
     </settings>
 </unattend>
