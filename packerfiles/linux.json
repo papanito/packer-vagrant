@@ -9,8 +9,7 @@
 		"iso_mirror": null,
 		"iso_checksum": null,
 		"iso_checksum_type": "md5",
-		"preseed_name": "ubuntu_16.10_de-ch_dhcp.cfg",
-		"preseed_mirror": "http://artifact-repo/unattended/",
+		"preseed_name": "linux_de-ch_dhcp.cfg",
 		"shutdown_command": "sudo -S shutdown -P now",
 		"headless": "true",
 		"keep_artifacts": "true"
@@ -35,12 +34,12 @@
 				"/install/vmlinuz initrd=/install/initrd.gz ",
 				"auto-install/enable=true ",
 				"debconf/priority=critical ",
-				"preseed/file=/floppy/unattended/{{user `preseed_name`}} ",
+				"preseed/file=/floppy/unattended/linux/{{user `preseed_name`}} ",
 				"<enter>"
 			],
 			"floppy_dirs": [
-				"../unattended",
-				"../scripts"
+				"../unattended/",
+				"../packerfiles/scripts"
 			], 
 			"shutdown_command": "echo '{{user `pwd`}}' | {{user `shutdown_command`}}",
 			"vboxmanage": [
@@ -65,12 +64,12 @@
 					"/install/vmlinuz initrd=/install/initrd.gz ",
 					"auto-install/enable=true ",
 					"debconf/priority=critical ",
-					"preseed/file=/floppy/unattended/{{user `preseed_name`}} ",
+					"preseed/file=/floppy/unattended/linux/{{user `preseed_name`}} ",
 					"<enter>"
 				], 
 			"floppy_dirs": [
-				"./unattended",
-				"./scripts"
+				"./unattended/linux",
+				"./packerfiles/scripts"
 			],
 			"format": "qcow2",
 			"accelerator": "kvm",
@@ -84,7 +83,7 @@
 		{
 			"type": "shell",
 			"scripts": [
-				"scripts/ubuntu.sh"
+				"packerfiles/scripts/ubuntu.sh"
 			]
 		}
 	],

@@ -13,7 +13,6 @@ import org.apache.tools.ant.filters.ReplaceTokens
 */
 project.ext {
 	packer = 'packer'
-
 }
 
 task clean(type: Delete) {
@@ -22,7 +21,7 @@ task clean(type: Delete) {
 
 task processResources(type: Copy) {
 	from('unattended') {
-		include "**/*.xml"
+		include '**/*.xml'
 		include '**/*.cfg'
    		into "unattended"
 	}
@@ -81,7 +80,7 @@ task buildWindows() {
 	tasks.findByName('buildWindowsPackages').mustRunAfter 'processResources'
 }
 
-task buildUbuntu(type:Exec) {
+task buildLinux(type:Exec) {
 	println 'Task buildUbuntu'
 	dependsOn 'processResources'
 	workingDir = buildDir
@@ -90,6 +89,6 @@ task buildUbuntu(type:Exec) {
 			"-var-file=./packerfiles/iso/$configFile", 
 			"-var-file=./packerfiles/variables.cfg", 
 			"-only=$builders", 
-			"./packerfiles/ubuntu_16.10.json" ]
+			"./packerfiles/linux.json" ]
 	commandLine
 }
