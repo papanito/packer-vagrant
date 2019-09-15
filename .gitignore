@@ -1,6 +1,10 @@
 # tools stuff
 .gradle
 gradle.properties
+.gradletasknamecache
+.project
+**/.vscode*
+**/*prefs
 **/packer-cache
 **/.vagrant
 **/output*
