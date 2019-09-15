@@ -1,18 +1,22 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 /*task build(type:Exec) {
-	println "Task build"
-	//executable = "dir"
-	//args = [ "packerfiles/iso" ]
-	//println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
-	String osName = System.getProperty("os.name").toLowerCase();
-	if (!osName.contains("windows")) {
-			ext.packer = "packer-io"
-	}
+    println "Task build"
+    //executable = "dir"
+    //args = [ "packerfiles/iso" ]
+    //println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
+    String osName = System.getProperty("os.name").toLowerCase();
+    if (!osName.contains("windows")) {
+        ext.packer = "packer-io"
+    }
 }
 */
 project.ext {
-	packer = 'packer'
+    packer = 'packer'
+}
+
+task showConfigs(type:Exec) {
+    new File("${buildDir}/packerfiles/iso").eachDir{ println it.name }
 }
 
 task clean(type: Delete) {
@@ -20,75 +24,76 @@ task clean(type: Delete) {
 }
 
 task processResources(type: Copy) {
-	from('unattended') {
-		include '**/*.xml'
-		include '**/*.cfg'
-   		into "unattended"
-	}
-	from('packerfiles') {
-		include '**/*.json'
-		include '**/*.cfg'
-		include '**/*.ps1'
-		include '**/*.sh'
-		into 'packerfiles'
-	}
+    from('unattended') {
+        include '**/*.xml'
+        include '**/*.cfg'
+           into "unattended"
+    }
+    from('packerfiles') {
+        include '**/*.json'
+        include '**/*.cfg'
+        include '**/*.ps1'
+        include '**/*.sh'
+        into 'packerfiles'
+    }
     filter(ReplaceTokens, tokens: [
         'username': username, 
         'password' : password,
-		'rootpassword': rootpassword
+        'rootpassword': rootpassword
     ])
-	into(buildDir)
+    into(buildDir)
 }
 
 task buildWindowsBase(type:Exec) {
-	println "Task buildWindowsBase"
-	workingDir = buildDir
-	executable = project.ext.packer
-	args = ["build", 
-			"-var-file=./packerfiles/iso/$configFile", 
-			"-var-file=./packerfiles/variables.cfg", 
-			"./packerfiles/windows_1_base.json" ]
-	commandLine
+    println "Task buildWindowsBase"
+    workingDir = buildDir
+    executable = project.ext.packer
+    args = ["build", 
+            "-var-file=./packerfiles/iso/$configFile", 
+            "-var-file=./packerfiles/variables.cfg", 
+            "./packerfiles/windows_1_base.json" ]
+    commandLine
 }
 
 task buildWindowsUpdates(type:Exec, dependsOn: "buildWindowsBase") {
-	println "Task buildWindowsUpdates"
-	workingDir = buildDir
-	executable = project.ext.packer
-	args = ["build", 
-			"-var-file=./packerfiles/iso/$configFile", 
-			"-var-file=./packerfiles/variables.cfg", 
-			"./packerfiles/windows_2_updates.json" ]
-	commandLine
+    println "Task buildWindowsUpdates"
+    workingDir = buildDir
+    executable = project.ext.packer
+    args = ["build", 
+            "-var-file=./packerfiles/iso/$configFile", 
+            "-var-file=./packerfiles/variables.cfg", 
+            "./packerfiles/windows_2_updates.json" ]
+    commandLine
 }
 
 task buildWindowsPackages(type:Exec, dependsOn: "buildWindowsUpdates") {
-	println "Task buildWindowsPackages"
-	workingDir = buildDir
-	executable = project.ext.packer
-	args = ["build", 
-			"-var-file=./packerfiles/iso/$configFile", 
-			"-var-file=./packerfiles/variables.cfg", 
-			"./packerfiles/windows_3_package.json" ]
-	commandLine
+    println "Task buildWindowsPackages"
+    workingDir = buildDir
+    executable = project.ext.packer
+    args = ["build", 
+            "-var-file=./packerfiles/iso/$configFile", 
+            "-var-file=./packerfiles/variables.cfg", 
+            "./packerfiles/windows_3_package.json" ]
+    commandLine
 }
 
 task buildWindows() {
-	println 'Task buildWindows'
-	dependsOn 'processResources'
-	dependsOn 'buildWindowsPackages'
-	tasks.findByName('buildWindowsPackages').mustRunAfter 'processResources'
+    println 'Task buildWindows'
+    dependsOn 'processResources'
+    dependsOn 'buildWindowsPackages'
+    tasks.findByName('buildWindowsPackages').mustRunAfter 'processResources'
 }
 
 task buildLinux(type:Exec) {
-	println 'Task buildUbuntu'
-	dependsOn 'processResources'
-	workingDir = buildDir
-	executable = project.ext.packer
-	args = ["build", 
-			"-var-file=./packerfiles/iso/$configFile", 
-			"-var-file=./packerfiles/variables.cfg", 
-			"-only=$builders", 
-			"./packerfiles/linux.json" ]
-	commandLine
+    dependsOn 'processResources'
+    workingDir = buildDir
+    executable = project.ext.packer
+    println "Building Linux $configFile at $workingDir"
+    showConfigs
+    args = ["build", 
+            "-var-file=./packerfiles/iso/$configFile", 
+            "-var-file=./packerfiles/variables.cfg", 
+            "-only=$builders", 
+            "./packerfiles/linux.json" ]
+    commandLine
 }
