@@ -1,0 +1,7 @@
+iso_name          = "en_windows_storage_server_2016_x64_dvd_9327790"
+iso_checksum      = "sha256:"
+iso_checksum_type = "
+license_key       = "
+guest_os_type     = "Windows10_64"
+winversion        = "server-2016-storage"
+output            = "windows-server-2016-storage-x64"

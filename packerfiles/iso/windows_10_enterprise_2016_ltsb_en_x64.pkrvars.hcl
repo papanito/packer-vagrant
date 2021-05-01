@@ -1,0 +1,6 @@
+iso_name          = "en_windows_10_enterprise_2016_ltsb_x64_dvd_9059483.iso"
+iso_checksum      = "sha1:031ED6ACDC47B8F582C781B039F501D83997A1CF"
+license_key       = "WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY"
+guest_os_type     = "Windows10_64"
+winversion        = "10-ent-n-2016-ltsb"
+output            = "windows-10-enterprise-ltsb-x64"

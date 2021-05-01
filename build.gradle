@@ -1,22 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
-/*task build(type:Exec) {
-    println "Task build"
-    //executable = "dir"
-    //args = [ "packerfiles/iso" ]
-    //println "call 'gradle buildWindows -PconfigFile=<config file>' or 'gradle buildLinux -PconfigFile=<config file>'"
-    String osName = System.getProperty("os.name").toLowerCase();
-    if (!osName.contains("windows")) {
-        ext.packer = "packer-io"
-    }
-}
-*/
 project.ext {
     packer = 'packer'
-}
-
-task showConfigs(type:Exec) {
-    new File("${buildDir}/packerfiles/iso").eachDir{ println it.name }
 }
 
 task clean(type: Delete) {
@@ -27,18 +12,17 @@ task processResources(type: Copy) {
     from('unattended') {
         include '**/*.xml'
         include '**/*.cfg'
-           into "unattended"
+        into "unattended"
     }
     from('packerfiles') {
-        include '**/*.json'
-        include '**/*.cfg'
+        include '**/*.hcl'
         include '**/*.ps1'
         include '**/*.sh'
         into 'packerfiles'
     }
     filter(ReplaceTokens, tokens: [
-        'username': username, 
-        'password' : password,
+        'username': username,
+        'password': password,
         'rootpassword': rootpassword
     ])
     into(buildDir)
@@ -49,9 +33,9 @@ task buildWindowsBase(type:Exec) {
     workingDir = buildDir
     executable = project.ext.packer
     args = ["build", 
-            "-var-file=./packerfiles/iso/$configFile", 
-            "-var-file=./packerfiles/variables.cfg", 
-            "./packerfiles/windows_1_base.json" ]
+            "-var-file=./packerfiles/iso/$configFile",
+            "-var-file=./packerfiles/variables.pkrvars.hcl",
+            "./packerfiles/windows_1_base.pkr.hcl" ]
     commandLine
 }
 
@@ -60,9 +44,9 @@ task buildWindowsUpdates(type:Exec, dependsOn: "buildWindowsBase") {
     workingDir = buildDir
     executable = project.ext.packer
     args = ["build", 
-            "-var-file=./packerfiles/iso/$configFile", 
-            "-var-file=./packerfiles/variables.cfg", 
-            "./packerfiles/windows_2_updates.json" ]
+            "-var-file=./packerfiles/iso/$configFile",
+            "-var-file=./packerfiles/variables.pkrvars.hcl",
+            "./packerfiles/windows_2_updates.pkr.hcl"]
     commandLine
 }
 
@@ -71,9 +55,9 @@ task buildWindowsPackages(type:Exec, dependsOn: "buildWindowsUpdates") {
     workingDir = buildDir
     executable = project.ext.packer
     args = ["build", 
-            "-var-file=./packerfiles/iso/$configFile", 
-            "-var-file=./packerfiles/variables.cfg", 
-            "./packerfiles/windows_3_package.json" ]
+            "-var-file=./packerfiles/iso/$configFile",
+            "-var-file=./packerfiles/variables.pkrvars.hcl",
+            "./packerfiles/windows_3_package.pkr.hcl" ]
     commandLine
 }
 
@@ -89,11 +73,9 @@ task buildLinux(type:Exec) {
     workingDir = buildDir
     executable = project.ext.packer
     println "Building Linux $configFile at $workingDir"
-    showConfigs
     args = ["build", 
-            "-var-file=./packerfiles/iso/$configFile", 
-            "-var-file=./packerfiles/variables.cfg", 
-            "-only=$builders", 
-            "./packerfiles/linux.json" ]
+            "-var-file=./packerfiles/iso/$configFile",
+            "-var-file=./packerfiles/variables.pkrvars.hcl",
+            "./packerfiles/linux.pkr.hcl" ]
     commandLine
 }
