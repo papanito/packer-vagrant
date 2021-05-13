@@ -18,4 +18,5 @@ gradle.properties
 wim
 
 # packer variable files
-/packerfiles/variables*.cfg
+/packerfiles/variables_*.pkrvars.hcl
+packer_cache/**

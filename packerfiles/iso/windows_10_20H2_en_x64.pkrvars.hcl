@@ -1,0 +1,6 @@
+iso_name          = "win10_20H2_v2_EnglishInternational_x64.iso"
+iso_checksum      = "sha256:BD9E41BDF9E23DCF5A0592F3BFE794584C80F1415727ED234E8929F656221836"
+license_key       = "XXXXX-XXXXX-XXXXX-XXXXX-XXXX"
+guest_os_type     = "Windows10_64"
+winversion        = "10-20h2"
+output            = "win10-20h2-x64"
