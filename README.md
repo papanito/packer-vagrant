@@ -1,6 +1,6 @@
-## Example templates for Vagrant and Packer
+# Example templates for Vagrant and Packer
 
-### Intro
+## Intro
 
 There are already some existing GitHub projects providing templates to create machines with Packer. However I created this project for learning purposes . In addition to the packer documentation I also took some inspiration from these great projects:
 
@@ -10,7 +10,7 @@ There are already some existing GitHub projects providing templates to create ma
 * [jacqinthebox: packer-templates](https://github.com/jacqinthebox/packer-templates)
 * [chef-bento: packer-templates](https://github.com/chef/bento/tree/master/packer_templates)
 
-### Structure
+## Structure
 
 * [images](./images) - images for better illustration in the README.txt
 * [packerfiles](./packerfiles) - hcl (variables) for packera
@@ -29,11 +29,11 @@ There are already some existing GitHub projects providing templates to create ma
 
 Additional information can be found in the related subfolders
 
-### Build
+## Build
 
 In order to build VMs with packer you can use the gradle script `build.gradle` as follows
 
-1. Add a gradle.properties file and define the following values. The values represent tokens which will be replaced in respective answer and packer files
+1. Add a `gradle.properties` file and define the following values. The values represent tokens which will be replaced in respective answer and packer files
 
    * `username=@username for user account to be created@`
    * `password=@password for user account 'username'@`
