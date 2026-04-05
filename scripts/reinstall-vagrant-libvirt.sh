@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # in case it's already installled
 vagrant plugin uninstall vagrant-libvirt
@@ -24,3 +24,4 @@ sudo mv /opt/vagrant/embedded/lib/libcurl.so{.backup,}
 sudo mv /opt/vagrant/embedded/lib/libcurl.so.4{.backup,}
 sudo mv /opt/vagrant/embedded/lib/libcurl.so.4.4.0{.backup,}
 sudo mv /opt/vagrant/embedded/lib/pkgconfig/libcurl.pc{.backup,}
+

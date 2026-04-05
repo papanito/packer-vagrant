@@ -1,5 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -e
 set -x
 
-echo "Configuration for linux boxes"
+echo "Configuration for linux boxes"q
