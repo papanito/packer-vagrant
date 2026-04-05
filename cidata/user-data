@@ -1,0 +1,119 @@
+#cloud-config
+# The #cloud-config header is essential for cloud-init to recognize the file.
+
+autoinstall:
+  # Specify the version of the autoinstall configuration format.
+  version: 1
+  refresh-installer:
+    update: true
+  # Identity configuration (hostname, user account)
+  identity:
+    hostname: ubuntu          # Set the hostname for the installed system
+    password: @passsword@
+    username: @username@          # Set the default user account name
+
+  # SSH configuration
+  ssh:
+    allow-pw: true          # Allow password authentication for SSH (use with caution)
+    install-server: true    # Ensure the OpenSSH server is installed
+    ssh_authorized_keys:    # Optional: Add SSH public keys for key-based authentication
+      -  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCW4bl+sUhOqX64UrPFXMfwt8f545erPT8PCFQc3rBGKhvx36lG04ae26fiTGINhYO5EhmFo0jCMn5vMxLzEJ5pLWGM6c8OL53CpdWtsfmscuXQKunLph2wb386VHs3js/pdrba+87uHnS9NVlXcR296gUsVudWkbHrCGoALTTJlBmp21CTNRxHNvpeVRIcpCmunudgir2vmW7sqWilWPlOOO3/8F86/QSWnu0orvVh1upcG7/DUYVDppxPbJ3SagS7a3l8dIHvFLyIFsu3jNHmsg3IUsXLGV9yk0b7UOJRGcJXCKM5s/zZwzVg4TnsauOFvsgwvRR4g85nZGlxqUFB aedu@clawfinger
+
+  # Network configuration (uses Netplan format)
+  network:
+    network:
+      version: 2
+      ethernets:
+        eth0:               # Assumes your primary network interface is named eth0
+          dhcp4: true       # Enable DHCP for IPv4
+
+      # Example for static IP configuration (uncomment and modify if needed)
+      # ethernets:
+      #   eth0:
+      #     dhcp4: no
+      #     addresses: [192.168.1.100/24]
+      #     routes:
+      #       - to: default
+      #         via: 192.168.1.1
+      #     nameservers:
+      #       addresses: [8.8.8.8, 8.8.4.4]
+
+  # Storage configuration (disk partitioning and filesystem layout)
+  storage:
+    layout:
+      name: direct            # Simple layout: Use the first available disk directly
+                              # Other options include 'lvm', 'custom', etc.
+                              # Be cautious: 'direct' typically wipes the disk.
+
+  # Packages to install during the installation
+  packages:
+    - curl
+    - wget
+    - vim
+    - net-tools
+
+  # # --- Keyboard Layout Configuration ---
+  # keyboard:
+  #   layout: ch                # Set the base layout to Swiss (ch)
+  #   variant: de               # Set the variant to German (de) within the Swiss layout
+
+  # --- Locale Configuration ---
+  locale: de_CH.UTF-8       # Set the system locale to German (Switzerland) with UTF-8 encoding
+
+
+    # Example for LVM layout (uncomment and modify if needed)
+    # layout:
+    #   name: lvm
+    #   lvm:
+    #     vg_name: ubuntu-vg
+    #     thinpool_name: thinpool
+    #     thinpool_size: 100%FREE
+    #   swap:
+    #     size: 2G # Example swap size
+    #   config:
+    #     - id: disk-sda
+    #       path: /dev/sda # Assuming /dev/sda is your target disk
+    #       type: disk
+    #       wipe: superblock-recursive
+    #       ptable: gpt # or dos
+
+    #     - device: disk-sda
+    #       size: 1GiB # Boot partition size
+    #       type: partition
+    #       flag: boot
+    #       id: partition-boot
+
+    #     - device: disk-sda
+    #       size: 100%FREE # Rest of the disk for LVM
+    #       type: partition
+    #       id: partition-lvm
+
+    #     - fstype: ext4
+    #       id: format-boot
+    #       device: partition-boot
+    #       volume:
+    #         usage: boot
+    #         uuid: ""
+
+    #     - type: mount
+    #       device: format-boot
+    #       path: /boot # Mount the boot partition
+
+    #     - type: lvm_volgroup
+    #       id: lvm-vg
+    #       devices: [partition-lvm]
+    #       name: ubuntu-vg # Should match lvm.vg_name
+
+    #     - type: lvm_logical_volume
+    #       id: lvm-lv-root
+    #       vg_name: ubuntu-vg # Should match lvm.vg_name
+    #       name: root
+    #       size: 100%FREE # Or specific size like 20G
+    #       # Optional: thinpool: thinpool # If using a thinpool
+
+    #     - fstype: ext4 # or xfs, etc.
+    #       id: format-root
+    #       device: lvm-lv-root
+
+    #     - type: mount
+    #       device: format-root
