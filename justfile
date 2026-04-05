@@ -5,9 +5,9 @@ build_dir     := "build"
 available_configs := `ls packerfiles/iso`
 
 # Credentials (Overridable via environment variables)
-username      := env_var_or_default("PACKER_USER", "admin")
-password      := env_var_or_default("PACKER_PASS", "password123")
-rootpassword  := env_var_or_default("PACKER_ROOT_PASS", "root123")
+username      := env("PKR_VAR_user")
+password      := env("PKR_VAR_pwd")
+rootpassword  := env("PKR_VAR_rootpwd")
 
 # Default: Show help
 default:
@@ -25,15 +25,17 @@ process-resources:
     @echo "Preparing resources in {{build_dir}}..."
     mkdir -p {{build_dir}}/unattended
     mkdir -p {{build_dir}}/packerfiles
+    mkdir -p {{build_dir}}/cidata
     cp -r unattended/* {{build_dir}}/unattended/
     cp -r packerfiles/* {{build_dir}}/packerfiles/
-    @# Token replacement using sed
+    cp -r cidata/* {{build_dir}}/cidata/
+    @# Updated: Only replace if wrapped in @ symbols to avoid breaking HCL keys
     @find {{build_dir}} -type f \( -name "*.xml" -o -name "*.cfg" -o -name "*.hcl" \) -exec sed -i \
-        -e 's/username/{{username}}/g' \
-        -e 's/password/{{password}}/g' \
-        -e 's/rootpassword/{{rootpassword}}/g' {} +
+        -e 's/\@username\@/{{username}}/g' \
+        -e 's/\@password\@/{{password}}/g' \
+        -e 's/\@rootpassword\@/{{rootpassword}}/g' {} +
 
-# Guard to ensure the config file actually exists
+# Guard to ensure the config file actua ftlly exists
 [private]
 check-config name:
     @echo "{{available_configs}}" | grep -q "{{name}}" || (echo "Error: Config '{{name}}' not found." && exit 1)
