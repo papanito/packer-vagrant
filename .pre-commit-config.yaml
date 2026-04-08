@@ -1,0 +1,19 @@
+repos:
+  - repo: https://gitlab.com/papanito/git-hooks.git
+    rev: v2.2.3
+    hooks:
+      - id: get_shared_config
+      - id: commitlint
+        stages: [commit-msg]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: trailing-whitespace
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.105.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_docs
+      - id: terraform_tflint
+      - id: terraform_trivy
